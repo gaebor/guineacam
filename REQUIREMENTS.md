@@ -11,3 +11,5 @@ Raspbian Jessie Lite
 * enable camera via `raspi-config`
 * `vlc` for streaming
 * put `bash guineacam.sh` into `crontab` at `@reboot`
+### Optional
+* `libnss-winbind` to see other win shares: https://askubuntu.com/questions/507649/ubuntu-can-not-ping-host-name-but-can-ping-ip
