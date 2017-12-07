@@ -15,7 +15,7 @@
 ## packages
 * must have
   
-      sudo apt install apache2 lynx vlc libnss-winbind
+      sudo apt install apache2 lynx vlc libnss-winbind mailutils
   
 * optionals
   
