@@ -19,7 +19,7 @@
   
 * optionals
   
-      sudo apt install mc htop git build-essential coreutils
+      sudo apt install mc htop git build-essential coreutils ntfs-3g
 
 ## Others
 * apache
