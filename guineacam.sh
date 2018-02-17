@@ -1,13 +1,23 @@
-while true; do
+function m {
+    mailsend -smtp smtp.gmail.com -port 587 -starttls -sub "$1" -f `hostname` \
+        -t `head -1 ~/mail.conf | tail -1` \
+        -user `head -2 ~/mail.conf | tail -1` \
+        -auth -pass `head -3 ~/mail.conf | tail -1`
+}
+
+IP_FILE=~/ip.txt
+
+while true
+do
 ### ip
   ip_str=`lynx -connect_timeout=10 --dump http://ipecho.net/plain 2> /dev/null | grep -P "(\d{1,3}\.){3}\d{1,3}"`
   if [[ $? -eq 0 && $ip_str ]]
   then
-    if [[ ! -e "ip.txt" || "`cat ip.txt`" != "$ip_str" ]]
+    if [[ ! -e $IP_FILE || "`cat $IP_FILE`" != $ip_str ]]
     then
-      echo $ip_str > ip.txt
+      echo $ip_str > $IP_FILE
       echo "http://$ip_str/
-rtsp://$ip_str:8554/" | mail -s "ip changed" guineacam@googlegroups.com
+rtsp://$ip_str:8554/" | m "ip changed"
     fi
   fi
 ### still image
@@ -21,7 +31,7 @@ rtsp://$ip_str:8554/" | mail -s "ip changed" guineacam@googlegroups.com
 ### check error  
   if [ $STILL_RESULT != 0 ] || [ $VIDEO_RESULT != 0 ] || [ -n "$STILL_ERROR" ]
   then
-    mail -s "camera error" guineacam@googlegroups.com <<<"\`raspistill\` returned $STILL_RESULT and reported:
+    m "camera error" <<<"\`raspistill\` returned $STILL_RESULT and reported:
 $STILL_ERROR
 \`raspivid\` returned $VIDEO_RESULT!"
     break
