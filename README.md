@@ -1,15 +1,20 @@
 # Bootstrap
 ## config
 
-* `sudo -u pi passwd`
 * `sudo raspi-config`
+  * password
   * wifi
   * ssh
   * camera
   * extend file system
   * login options at boot
+  * hdmi hotplug (boot/config.txt)
+  * timezone
+  
 * `sudo apt update && sudo apt dist-upgrade -y`
+  * Don't do this over ssh, IDK why, but it breaks. Connect a monitor & keyboard!
 * [static ip](https://www.modmypi.com/blog/how-to-give-your-raspberry-pi-a-static-ip-address-update): edit `/etc/dhcpcd.conf`
+  * Preferably IP reservation on router!
 * set [hostname](https://www.howtogeek.com/167195/how-to-change-your-raspberry-pi-or-other-linux-devices-hostname/): `/etc/hosts` and `/etc/hostname`
 
 ## packages
