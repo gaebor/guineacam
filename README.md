@@ -1,12 +1,12 @@
 # Bootstrap
+* __Use a sufficient power supply! Low power can cause system corruption!__
 * `sudo apt update && sudo apt dist-upgrade -y`
-  * Don't do this over ssh, IDK why, but it breaks. Connect a monitor & keyboard!
  
 ## config
 
 * `sudo raspi-config`
   * password
-  * wifi, hostname
+  * network, hostname
   * ssh
   * camera
   * extend file system
@@ -25,7 +25,8 @@
       
   for mail I used [mailsend](https://github.com/muquit/mailsend):
   
-      sudo apt-get install openssl openssl-dev
+  IDK about the openssl libraries but install `libssl-dev` and/or `openssl-dev` also!
+  
       git clone https://github.com/muquit/mailsend
       cd mailsend 
       ./configure --with-openssl=/usr
@@ -49,4 +50,4 @@
   * sender (gmail) username
   * sender password
 * also configure your gmail to allow smtp: https://support.google.com/a/answer/6260879?hl=en
-* put the `guineacam/guineacam.sh` script into `crontab -e`
+* put the `guineacam/guineacam.sh` script into `crontab -e` (crontab of `pi`, not for `root` !)
