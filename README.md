@@ -1,9 +1,12 @@
 # Bootstrap
+* `sudo apt update && sudo apt dist-upgrade -y`
+  * Don't do this over ssh, IDK why, but it breaks. Connect a monitor & keyboard!
+ 
 ## config
 
 * `sudo raspi-config`
   * password
-  * wifi
+  * wifi, hostname
   * ssh
   * camera
   * extend file system
@@ -11,16 +14,14 @@
   * hdmi hotplug (boot/config.txt)
   * timezone
   
-* `sudo apt update && sudo apt dist-upgrade -y`
-  * Don't do this over ssh, IDK why, but it breaks. Connect a monitor & keyboard!
 * [static ip](https://www.modmypi.com/blog/how-to-give-your-raspberry-pi-a-static-ip-address-update): edit `/etc/dhcpcd.conf`
   * Preferably IP reservation on router!
-* set [hostname](https://www.howtogeek.com/167195/how-to-change-your-raspberry-pi-or-other-linux-devices-hostname/): `/etc/hosts` and `/etc/hostname`
+* [hostname](https://www.howtogeek.com/167195/how-to-change-your-raspberry-pi-or-other-linux-devices-hostname/): `/etc/hosts` and `/etc/hostname`
 
 ## packages
 * must have
   
-      sudo apt install apache2 lynx vlc libnss-winbind git build-essential
+      sudo apt install mc apache2 lynx vlc libnss-winbind git build-essential
       
   for mail I used [mailsend](https://github.com/muquit/mailsend):
   
@@ -34,7 +35,7 @@
 
 * optionals
   
-      sudo apt install mc htop coreutils ntfs-3g
+      sudo apt install htop coreutils ntfs-3g
 
 ## Setup
 * get the stuff
