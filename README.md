@@ -16,12 +16,29 @@
   
 * [static ip](https://www.modmypi.com/blog/how-to-give-your-raspberry-pi-a-static-ip-address-update): edit `/etc/dhcpcd.conf`
   * Preferably IP reservation on router!
-* [hostname](https://www.howtogeek.com/167195/how-to-change-your-raspberry-pi-or-other-linux-devices-hostname/): `/etc/hosts` and `/etc/hostname`
+* hostname
+  * https://www.howtogeek.com/167195/how-to-change-your-raspberry-pi-or-other-linux-devices-hostname/
+  * https://superuser.com/questions/943678/cannot-resolve-hostname-raspberrypi-on-home-network
+  * https://askubuntu.com/questions/507649/ubuntu-can-not-ping-host-name-but-can-ping-ip
+  
+  To see you Pi from windows (and other) machines by hostname:
+    
+      sudo apt install libnss-winbind samba
+
+  set in `/etc/nsswitch.conf` __wins__
+
+      hosts:          files mdns4_minimal dns mdns4 wins [NOTFOUND=return]
+	
+  set in `/etc/samba/smb.conf`
+    
+      wins support = yes
+  
+  restart `samba` if necessary
 
 ## packages
 * must have
   
-      sudo apt install mc apache2 lynx vlc libnss-winbind git build-essential
+      sudo apt install mc apache2 lynx vlc git build-essential
       
   for mail I used [mailsend](https://github.com/muquit/mailsend):
   
