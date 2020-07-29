@@ -1,11 +1,18 @@
+INTERVAL=1000
+
+if [ -n "$1" ]
+then
+    INTERVAL="$1"
+fi
+
 function m {
-    mailsend -smtp smtp.gmail.com -port 587 -starttls -sub "$1" -f `hostname` \
-        -t `head -1 ~/mail.conf | tail -1` \
-        -user `head -2 ~/mail.conf | tail -1` \
-        -auth -pass `head -3 ~/mail.conf | tail -1`
+    mailsend-go -smtp smtp.gmail.com -port 587 -sub "$1" -f "$USER"@`hostname` \
+        -t `head -n 1 ~/mail.conf | tail -n 1` \
+        auth -user `head -n 2 ~/mail.conf | tail -n 1` -pass `head -n 3 ~/mail.conf | tail -n 1` \
+        body -msg "$2"
 }
 
-IP_FILE=~/ip.txt
+IP_FILE=/home/pi/ip.txt
 
 while true
 do
@@ -16,22 +23,23 @@ do
     if [ ! -e $IP_FILE -o "`cat $IP_FILE`" != "$ip_str" ]
     then
       echo $ip_str > $IP_FILE
-      echo "http://$ip_str/
-rtsp://$ip_str:8554/" | m "ip changed"
+      m "ip changed" "http://$ip_str/
+rtsp://$ip_str:8554/"
     fi
   fi
 ### still image
   STILL_ERROR=`sudo raspistill -w 768 -h 1024 -q 100 -rot 90 -e jpg -o "/var/www/html/guinea_pic.jpg" --metering average --nopreview 2>&1 > /dev/null`
   STILL_RESULT=$?
   echo $STILL_ERROR
+  sudo chmod 755 /var/www/html/guinea_pic.jpg
 ### stream
-  sudo raspivid -o - -t 1000000 -w 480 -h 640 --rotation 90 --metering average --profile high --nopreview -fps 25 --intra 25 | \
+  sudo raspivid -o - -t $((1000*INTERVAL)) -w 480 -h 640 --rotation 90 --metering average --profile high --nopreview -fps 25 --intra 25 | \
   cvlc -vvv stream:///dev/stdin --sout '#rtp{sdp=rtsp://:8554/}' :demux=h264 --play-and-exit
   VIDEO_RESULT=$?
 ### check error
   if [ $STILL_RESULT -ne 0 -o $VIDEO_RESULT -ne 0 -o -n "$STILL_ERROR" ]
   then
-    m "camera error" <<<"\`raspistill\` returned $STILL_RESULT and reported:
+    m "camera error" "\`raspistill\` returned $STILL_RESULT and reported:
 $STILL_ERROR
 \`raspivid\` returned $VIDEO_RESULT!"
     break

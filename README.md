@@ -7,9 +7,10 @@
 * `sudo raspi-config`
   * password
   * network, hostname
+    * `/etc/hostname` and `/etc/hosts`
   * ssh
+    * put a file called `ssh` in the boot root, content doesn't matter
   * camera
-  * extend file system
   * login options at boot
   * hdmi hotplug (boot/config.txt)
   * timezone
@@ -40,20 +41,13 @@
   
       sudo apt install mc apache2 lynx vlc git build-essential
       
-  for mail I used [mailsend](https://github.com/muquit/mailsend):
+  for mail I used [mailsend-go](https://github.com/muquit/mailsend-go):
   
-  IDK about the openssl libraries but install `libssl-dev` and/or `openssl-dev` also!
-  
-      git clone https://github.com/muquit/mailsend
-      cd mailsend 
-      ./configure --with-openssl=/usr
-      make
-      sudo make install
-      cd
+      sudo dpkg -i mailsend-go_1.0.9_linux-ARM.deb
 
 * optionals
   
-      sudo apt install htop coreutils ntfs-3g
+      sudo apt install htop coreutils cmake screen ntfs-3g
 
 ## Setup
 * get the stuff
